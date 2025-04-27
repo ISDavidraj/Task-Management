@@ -1,0 +1,73 @@
+//font-size
+@for $i from 1 through 49 {
+    .font-#{$i} {
+      font-size: #{$i}px;
+    }
+}
+
+.cursor-pointer{
+    cursor: pointer;
+}
+
+.text-underline{
+  text-decoration: underline !important;
+}
+
+.sticky-top{
+  z-index: 1000 !important;
+}
+
+
+.to-do-bg{
+  background-color: var(--blue-200);
+  color: var(--blue-700);
+  border: 1px solid rgb(167, 167, 239);
+  .card{
+    border: 1px solid rgb(167, 167, 239);
+  }
+}
+
+.in-progress-bg{
+  background-color: var(--yellow-100);
+  color: var(--yellow-700);
+  border: 1px solid rgb(228, 198, 142);
+  .card{
+    border: 1px solid rgb(228, 198, 142);
+  }
+}
+
+.done-bg{
+  background-color: var(--red-100);
+  border: 1px solid rgb(246, 189, 189);
+  color: var(--red-700);
+  .card{
+    border: 1px solid rgb(246, 189, 189);
+  }
+}
+
+.header-done-bg{
+  background-color: var(--red-100);
+}
+.header-in-progress-bg{
+  background-color: var(--yellow-100);
+}
+.header-to-do-bg{
+  background-color: var(--blue-200);
+}
+
+.container-height{
+  height: 74vh;
+  overflow: auto;
+  width: 300px;
+}
+
+.mat-mdc-fab{
+  background-color: white !important;
+  color: black !important;
+}
+
+.mat-mdc-fab .mat-mdc-button-persistent-ripple::before{
+  background-color: var(--red-100) !important;
+}
+
+

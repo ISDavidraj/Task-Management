@@ -1,0 +1,120 @@
+<div class="board-container">
+    <div class="board-header">
+        <span class="fs-4 fw-semibold fst-italic">Task Management Dashboard</span>
+    </div>
+
+    <div class="d-flex justify-content-end mb-3">
+        <button mat-flat-button color="primary" (click)="openAddTaskDialog()">Add New Task</button>
+    </div>
+
+    <div class="d-flex gap-3 flex-wrap">
+        <!-- To Do -->
+        <div class="flex-grow-1 to-do-bg rounded container-height" 
+            cdkDropList 
+            #todoList="cdkDropList"
+            [cdkDropListData]="todoTasks" 
+            [cdkDropListConnectedTo]="[todoList,inProgressList,doneList]"
+            (cdkDropListDropped)="drop($event, 'To Do')"
+            (cdkDropListEntered)="isHoveringTodo = true"
+            (cdkDropListExited)="isHoveringTodo = false">
+            
+            <div class="font-16 mx-3 py-2 sticky-top header-to-do-bg">
+                <i class="fa-solid fa-list me-1"></i>
+                <span class="fw-semibold mx-1 font-18">To Do</span>
+            </div>
+
+            <div class="task-card" *ngFor="let task of todoTasks" cdkDrag>
+                <ng-container *ngTemplateOutlet="taskCard; context: { data: task }"></ng-container>
+            </div>
+
+            @if (todoTasks.length == 0 && !isHoveringTodo) {
+                <div class="d-flex justify-content-center align-items-center h-75">
+                    <button mat-fab aria-label="icon" (click)="addTask('To Do')" matTooltip="Add">
+                        <i class="fa-solid fa-plus"></i>
+                    </button>
+                </div>
+            }
+        </div>
+
+        <!-- In Progress -->
+        <div class="flex-grow-1 in-progress-bg rounded container-height" 
+            cdkDropList 
+            #inProgressList="cdkDropList"
+            [cdkDropListData]="inProgressTasks" 
+            [cdkDropListConnectedTo]="[todoList,inProgressList,doneList]"
+            (cdkDropListDropped)="drop($event, 'In Progress')"
+            (cdkDropListEntered)="isHoveringInProgress = true"
+            (cdkDropListExited)="isHoveringInProgress = false">
+            
+            <div class="font-16 mx-3 py-2 sticky-top header-in-progress-bg">
+                <i class="fa-regular fa-hourglass me-1"></i>
+                <span class="fw-semibold mx-1 font-18">In Progress</span>
+            </div>
+
+            <div class="task-card" *ngFor="let task of inProgressTasks" cdkDrag>
+                <ng-container *ngTemplateOutlet="taskCard; context: { data: task }"></ng-container>
+            </div>
+
+            @if (inProgressTasks.length == 0 && !isHoveringInProgress) {
+                <div class="d-flex justify-content-center align-items-center h-75">
+                    <button mat-fab aria-label="icon" (click)="addTask('In Progress')" matTooltip="Add">
+                        <i class="fa-solid fa-plus"></i>
+                    </button>
+                </div>
+            }
+        </div>
+
+        <!-- Done -->
+        <div class="flex-grow-1 done-bg rounded container-height" 
+            cdkDropList 
+            #doneList="cdkDropList"
+            [cdkDropListData]="doneTasks" 
+            [cdkDropListConnectedTo]="[todoList,inProgressList,doneList]"
+            (cdkDropListDropped)="drop($event, 'Done')"
+            (cdkDropListEntered)="isHoveringDone = true"
+            (cdkDropListExited)="isHoveringDone = false">
+            
+            <div class="font-16 mx-3 py-2 sticky-top header-done-bg">
+                <i class="fa-regular fa-square-check me-1"></i>
+                <span class="fw-semibold mx-1 font-18">Done</span>
+            </div>
+
+            <div class="task-card" *ngFor="let task of doneTasks" cdkDrag>
+                <ng-container *ngTemplateOutlet="taskCard; context: { data: task }"></ng-container>
+            </div>
+
+            @if (doneTasks.length == 0 && !isHoveringDone) {
+                <div class="d-flex justify-content-center align-items-center h-75">
+                    <button mat-fab aria-label="icon" matTooltip="Add" (click)="addTask('Done')">
+                        <i class="fa-solid fa-plus"></i>
+                    </button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<ng-template #taskCard let-task="data">
+    <div class="card bg-white mx-3 my-1">
+        <div class="mt-1 mb-2">
+            <div class="mx-2 d-flex flex-column">
+                <span class="fw-semibold fst-italic text-underline rounded mt-1 p-1" [ngClass]="{
+                    'bg-body-secondary': task.status == 'To Do',
+                    'bg-warning-subtle': task.status == 'In Progress',
+                    'bg-danger-subtle': task.status == 'Done'
+                  }">{{task.title}}</span>
+                <span class="mt-1 px-1">{{task.description}}</span>
+            </div>
+
+            <div class="d-flex justify-content-end font-18 mx-2">
+                <i class="fa-solid fa-eraser mx-2 text-secondary-emphasis cursor-pointer" 
+                   (click)="deleteRow(task)"
+                   matTooltip="Erase"></i>
+
+                <i class="fa-regular fa-pen-to-square mx-1 text-secondary-emphasis cursor-pointer" 
+                   (click)="edit(task)"
+                   matTooltip="Edit"></i>
+            </div>
+        </div>
+    </div>
+</ng-template>

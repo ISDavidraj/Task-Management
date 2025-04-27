@@ -1,0 +1,46 @@
+<span class="d-flex justify-content-center fs-5 fw-semibold text-underline py-2">Add New Task</span>
+<mat-dialog-content>
+    <form [formGroup]="taskForm" class="mt-2">
+        <div class="row">
+            <div class="col-6">
+                <mat-form-field appearance="outline" class="example-full-width">
+                    <mat-label>Title</mat-label>
+                    <input matInput formControlName="title" required>
+                    @if (taskForm.get('title')?.hasError('required')) {
+                    <mat-error>
+                        Title is required
+                    </mat-error>
+                    }
+                </mat-form-field>
+            </div>
+
+            <div class="col-6">
+                <mat-form-field appearance="outline" class="example-full-width">
+                    <mat-label>Status</mat-label>
+                    <mat-select formControlName="status">
+                        @for(status of statusOptions;track status){
+                        <mat-option [value]="status">
+                            {{ status }}
+                        </mat-option>
+                        }
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div class="col-12 mt-2">
+                <mat-form-field appearance="outline" class="example-full-width w-100">
+                    <mat-label>Description</mat-label>
+                    <textarea rows="1" matInput formControlName="description"></textarea>
+                </mat-form-field>
+            </div>
+        </div>
+
+
+
+
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-stroked-button color="primary" (click)="onCancel()">Cancel</button>
+    <button mat-flat-button color="bg-red" (click)="onSubmit()" [disabled]="!taskForm.valid">{{ this.action  == 'edit' ? "Update" : "Save"}}</button>
+</mat-dialog-actions>

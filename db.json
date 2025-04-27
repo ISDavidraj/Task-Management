@@ -1,0 +1,22 @@
+{
+  "tasks": [
+    {
+      "id": 1,
+      "title": "Initialize project",
+      "description": "Set up Angular project structure",
+      "status": "Done"
+    },
+    {
+      "id": 2,
+      "title": "Create task service",
+      "description": "Implement CRUD operations",
+      "status": "In Progress"
+    },
+    {
+      "id": 3,
+      "title": "Design UI",
+      "description": "Create Kanban board layout",
+      "status": "To Do"
+    }
+  ]
+}
